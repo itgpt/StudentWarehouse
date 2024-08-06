@@ -1,5 +1,6 @@
 from src import os_import
 
-print(os_import.api_key)
+if __name__ == '__main__':
 
-# print(os_import.API_KEY)
+  print(os_import.api_key)
+  print(os_import.db_password)

@@ -2,7 +2,7 @@ FROM python:3.11.8
 
 
 ENV TZ Asia/Shanghai
-
+ENV API_KEY=your_api_key
 WORKDIR /app
 
 COPY requirements.txt /app
