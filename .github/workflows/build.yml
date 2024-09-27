@@ -1,16 +1,16 @@
 name: Erriez MIDI SYSEX-IO build and release
 
 on:
-  push:
-    branches: [ xxxx, staging/erriez/* ]
-    tags:
-      - 'v*.*.*'
-  pull_request:
-    branches: [ xxxx, staging/erriez/* ]
+    push:
+        branches: [ xxxx, staging/erriez/* ]
+        tags:
+        - 'v*.*.*'
+    pull_request:
+        branches: [ xxxx, staging/erriez/* ]
 
 env:
-  WIN_NAME: Ghost-Downloader.exe
-  LINUX_NAME: Ghost-Downloader.run
+    WIN_NAME: Ghost-Downloader.exe
+    LINUX_NAME: Ghost-Downloader.run
 
 
 jobs:
