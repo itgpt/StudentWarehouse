@@ -1,0 +1,36 @@
+FROM ubuntu:latest as build
+
+RUN apt-get update && \
+    apt-get -y upgrade && \
+    apt-get -y install openssh-server ssh curl git vim python3-pip python3-venv wget  && \
+    mkdir /var/run/sshd && \
+    echo 'root:root' | chpasswd && \
+    sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -ri 's/^#?PasswordAuthentication\s+.*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -ri 's/^#?X11Forwarding\s+.*/X11Forwarding yes/' /etc/ssh/sshd_config && \
+    sed -ri 's/^#?X11UseLocalhost\s+.*/X11UseLocalhost no/' /etc/ssh/sshd_config && \
+    sed -ri 's/^#?UsePAM\s+.*/UsePAM no/' /etc/ssh/sshd_config && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+    
+CMD ["/usr/sbin/sshd", "-D"]
+
+
+FROM build
+
+EXPOSE 8000
+
+ARG user=test
+
+# 修改 创建用户的命令
+RUN sed -i 's/SHELL = \/bin\/sh/SHELL = \/bin\/bash/g' /etc/default/useradd
+
+
+# 创建用户的命令并且给添加密码
+RUN useradd --create-home --no-log-init --shell /bin/bash ${user} \
+    && adduser ${user} sudo \
+    && echo "${user}:1" | chpasswd
+
+
+    

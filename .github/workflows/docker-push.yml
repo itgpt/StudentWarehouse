@@ -6,7 +6,7 @@ on:
       - main
       - v*
     paths:
-      - 'Dockerfile'
+      - './docker/Dockerfile'
 
   
 jobs:
@@ -32,10 +32,8 @@ jobs:
       - name: 构建和推送Docker hub
         uses: docker/build-push-action@v2
         with:
-            context: .
+            context: ./docker/
             platforms: linux/amd64,linux/arm64 ,linux/arm/v7
             push: true
             tags: |
-                # ${{ secrets.DOCKERHUB_USERNAME }}/StudentWarehouse:latest
-                ${{ github.repository }}:latest
-                ${{ github.repository }}:${{ github.event.release.tag_name }}
+                ${{ secrets.DOCKERHUB_USERNAME }}/StudentWarehouse:latest
